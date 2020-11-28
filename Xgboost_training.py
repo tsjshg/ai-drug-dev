@@ -11,11 +11,11 @@ from sklearn import model_selection
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score,accuracy_score,roc_curve,auc,roc_auc_score,make_scorer,cohen_kappa_score
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
-from sklearn.externals import joblib
+#from sklearn.externals import joblib
 from sklearn import tree
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import make_pipeline
-from skrebate import ReliefF
+#from skrebate import ReliefF
 from sklearn.model_selection import cross_val_score
 from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import Pipeline as imbPipeline
