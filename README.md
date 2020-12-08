@@ -37,3 +37,7 @@ The script labels each gene in latent_space.txt to build training data for train
 `python Xgboost_training.py`
 
 The script is to train classifier models and to infer putative drug-targets using the trained classifiers. The script uses training data from step 2 and calculates class probability of potential drug-target class for each gene in training data. The script will generates a file “Prediction_results_for_putative_targets.txt” that contains the class probabilities for genes. The higher value of class probability of drug-target class for a given gene indicates that the gene is more likely to be a potential putative drug-target.
+
+### Contribution
+
+The original source code were developed by Takeshi Hase.
