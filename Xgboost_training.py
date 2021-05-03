@@ -1,3 +1,13 @@
+
+import argparse
+
+parser = argparse.ArgumentParser(description='XGBoost training')
+parser.add_argument('--data', default='training_data.txt', help='The output from building_training_data.py')
+parser.add_argument('--name', default='my_analysis', help='Prefix for output files')
+
+args = parser.parse_args()
+
+
 #import modules
 import pandas as pd
 import numpy as np
@@ -25,7 +35,7 @@ from xgboost.sklearn import XGBClassifier
 
 np.random.seed(seed=113117)
 
-dfile = "training_data.txt"
+dfile = args.data
 datada = pd.read_csv(dfile,sep="\t",index_col=0)
 
 mytargetall = datada['OBJ']
@@ -91,7 +101,8 @@ for i in range(100):
 
 PDADA = pd.concat([PDATRUE.mean(axis=1),PDAFALSE.mean(axis=1),mytargetall],axis=1)
 PDADA = PDADA.rename(columns={0:'probability for drug target', 1:'probability for non-drug target', 'OBJ':'answer'})
-PDADA.to_csv('Prediction_results_for_putative_targets.txt',index=True,sep="\t")
-PDSRDA.to_csv('Scores_for_100_iterations.txt',index=True,sep="\t")
-PDPRDA.to_csv('Best_parameters_for_100_iterations.txt',index=True,sep="\t")
+
+PDADA.to_csv(f'{args.name}_prediction_results_for_putative_targets.txt',index=True,sep="\t")
+PDSRDA.to_csv(f'{args.name}_scores_for_100_iterations.txt',index=True,sep="\t")
+PDPRDA.to_csv(f'{args.name}_best_parameters_for_100_iterations.txt',index=True,sep="\t")
 

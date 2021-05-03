@@ -7,6 +7,9 @@ This repository contains the model for network embedding and scripts to run comp
 If you use the model and scripts for your study, please cite our article:
 Shingo Tsuji, Takeshi Hase, Ayako Yachie, Taiko Nishino, Samik Ghosh, Masataka Kikuchi, Kazuro Shimokawa, Hiroyuki Aburatani, Hiroaki Kitano, Hiroshi Tanaka (2020) Artificial intelligence based computational framework for drug-target prioritization and inference of novel repositionable drugs for Alzheimer’s disease. bioRxiv: 2020.07.17.208116.
 
+## Setup
+We run the following code on Python3.8 with the packages listed in requirements.txt. Additional materials are available on [here](https://www.dropbox.com/sh/trez52jrytgx41v/AACwPEyi3mju2TcEjnNG4w4Aa?dl=0)
+
 ## How to use
 The process of computational pipeline to prioritize putative drug targets is composed of three steps:
 
@@ -22,19 +25,19 @@ Step 3. Training a classifier based on Xgboost algorithm using training data fro
 
 #### Command to run the script for step 1.
 
-`python network_embedding.py`
+`python network_embedding.py --pin PIN_data.csv --model network_embedding_model.hdf5 --output my_output.txt`
 
 network_embedding.py loads optimized deep autoencoder model ([network_embedding_model.hdf5](https://www.dropbox.com/s/rkbfxc8tvdis8xl/network_embedding_model.hdf5?dl=0) is the file for the optimized model) to extract latent features from the protein-interaction network ([PIN_data.csv](https://www.dropbox.com/s/hts7q28t5lxge43/PIN_data.csv?dl=0)). “latent_space.txt” includes latent features for each gene in the network.
 
 #### Command to run the script for step.2
 
-`python building_training_data.py`
+`python building_training_data.py --targets list_of_known_targets.csv --emb my_output.txt --output my_train.txt`
 
 The script labels each gene in latent_space.txt to build training data for training classification model. The script load a file (list_known_target.csv) for a list of known drug-target genes (for Alzheimer’s disease) and used the list to label genes. We obtained the list of known targets from [drugbank database](https://www.drugbank.ca/).
 
 #### Command to run the script for step. 3
 
-`python Xgboost_training.py`
+`python Xgboost_training.py --data my_train.txt --name analysis_name`
 
 The script is to train classifier models and to infer putative drug-targets using the trained classifiers. The script uses training data from step 2 and calculates class probability of potential drug-target class for each gene in training data. The script will generates a file “Prediction_results_for_putative_targets.txt” that contains the class probabilities for genes. The higher value of class probability of drug-target class for a given gene indicates that the gene is more likely to be a potential putative drug-target.
 
